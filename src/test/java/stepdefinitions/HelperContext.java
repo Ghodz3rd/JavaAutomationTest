@@ -19,19 +19,17 @@ public class HelperContext {
        BufferedReader csvReader;
 		try {
 			csvReader = new BufferedReader(new FileReader(path));
-					while ((row = csvReader.readLine()) != null) {
-			       String[] data = row.split(";");
+			while ((row = csvReader.readLine()) != null) {
+				String[] data = row.split(";");
 			       
-			       if(data[0].substring(0, 1) != "#")
-			       {  			    	
-			    	   if (data[0].equals(Param)) {
-			    		   dataResult = data[1];
-			    		   csvReader.close();
-			    		   break; 
-			    	   	}
-	           
-			       }
-			   }
+			    if(data[0].substring(0, 1) != "#"){  			    	
+			    	if (data[0].equals(Param)) {
+			    		dataResult = data[1];
+			    		csvReader.close();
+			    		break; 
+			    	}
+			    }
+			}
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

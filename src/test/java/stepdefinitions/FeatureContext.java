@@ -12,10 +12,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+
+import stepdefinitions.HelperContext;
 
 public class FeatureContext {
 
@@ -23,8 +22,6 @@ public class FeatureContext {
 	private Integer suspend = 3000;
 	static String systemPath = System.getProperty("user.dir");
 	
-	
-
 	 @Before
 	 public void beforeScenario(){
 		System.setProperty("webdriver.chrome.driver",systemPath +"/files/chromedriver");		
@@ -36,7 +33,7 @@ public class FeatureContext {
 	@Given("I am on homepage {string}")
 	public void i_am_on_homepage(String path) {
 		  
-		driverConfig(path);
+		driver.get(path);
 				
 	}
 
@@ -45,7 +42,7 @@ public class FeatureContext {
 				
 		String locator;
 		try {
-			locator = DataFromCSV(Elem.trim());
+			locator = HelperContext.DataFromCSV(Elem.trim());
 			WebElement element = driver.findElement(By.xpath(locator));
 						
 			if (element != null) {
@@ -66,7 +63,7 @@ public class FeatureContext {
 
 	String locator;
 	try {
-		locator = DataFromCSV(Elem.trim());
+		locator = HelperContext.DataFromCSV(Elem.trim());
 		WebElement element = driver.findElement(By.xpath(locator));
 						
 		if (element != null) {
@@ -90,46 +87,7 @@ public class FeatureContext {
 		}
 			
 	}
-	
-	static void driverConfig(String path) 
-	{
-
-		driver.get(path);
-		
-	}
-	
-	static String DataFromCSV(String Param) throws IOException
-    {
-		
-       String dataResult = "";
-       String path = systemPath + "/files/data/Element.csv";
-       String row = "";
-       
-       BufferedReader csvReader;
-		try {
-			csvReader = new BufferedReader(new FileReader(path));
-					while ((row = csvReader.readLine()) != null) {
-			       String[] data = row.split(";");
-			       
-			       if(data[0].substring(0, 1) != "#")
-			       {  			    	
-			    	   if (data[0].equals(Param)) {
-			    		   dataResult = data[1];
-			    		   csvReader.close();
-			    		   break; 
-			    	   	}
-	           
-			       }
-			   }
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		 return dataResult;
-	}
-      
-	 
+	      
 	@After
 	public void afterScenario(){
 	    driver.quit();

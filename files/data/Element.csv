@@ -1,0 +1,5 @@
+#Header
+Sign-in;//div[@class='mem-nav ml-auto']//a[@id='signinlink']
+Sign_in_with_Newspaper.com;//div[@class='container-fluid']/div[3]//button
+Username;//div[@class='container-fluid']//input[@id='username']
+Password;//div[@class='container-fluid']//input[@id='password']
